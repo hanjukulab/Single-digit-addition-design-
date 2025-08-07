@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>たしざんクイズ</title>
+  <style>
+    body {
+      font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", sans-serif;
+      background-color: #FFF7E5;
+      color: #333;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #FF6B6B;
+    }
+
+    .question {
+      font-size: 2em;
+      margin: 30px 0 10px;
+      color: #4A90E2;
+    }
+
+    input[type="tel"] {
+      font-size: 2em;
+      padding: 10px;
+      width: 100px;
+      border: 3px solid #FFD93B;
+      border-radius: 15px;
+      text-align: center;
+      background-color: #FFF;
+    }
+
+    button {
+      font-size: 1.5em;
+      background-color: #FF6B6B;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 20px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #FF4C4C;
+    }
+
+    .result {
+      font-size: 1.8em;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <h1>たしざんクイズ</h1>
+
+  <div class="question">
+    <span id="num1"></span> ＋ <span id="num2"></span> は？
+  </div>
+
+  <input type="tel" inputmode="numeric" pattern="[1-9]" id="numberInput" placeholder="こたえ">
+
+  <br />
+  <button onclick="checkAnswer()">こたえあわせ</button>
+
+  <div class="result" id="resultArea"></div>
+
+  <script>
+    function getRandomNumber() {
+      return Math.floor(Math.random() * 8) + 1; // 1〜8の範囲
+    }
+
+    function generateQuestion() {
+      let a = getRandomNumber();
+      let b = getRandomNumber();
+      while (a + b > 9) {
+        a = getRandomNumber();
+        b = getRandomNumber();
+      }
+      document.getElementById("num1").textContent = a;
+      document.getElementById("num2").textContent = b;
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.getElementById("numberInput").value.trim();
+      const num1 = parseInt(document.getElementById("num1").textContent);
+      const num2 = parseInt(document.getElementById("num2").textContent);
+      const correct = num1 + num2;
+
+      let result = "";
+      if (parseInt(userAnswer) === correct) {
+        result = "🌟 せいかい！ 🎉";
+      } else {
+        result = `❌ ざんねん…（せいかいは ${correct} だよ）`;
+      }
+
+      document.getElementById("resultArea").textContent = result;
+    }
+
+    generateQuestion();
+  </script>
+</body>
+</html>
